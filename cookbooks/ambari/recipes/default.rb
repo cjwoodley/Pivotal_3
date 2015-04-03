@@ -31,6 +31,9 @@ end
   end
 end
 
+service 'httpd' do
+  action [:enable, :start]
+end
 
 
 bash 'install_ambari' do
@@ -39,6 +42,8 @@ bash 'install_ambari' do
   cwd '/opt/sources'
   code <<-EOH
     tar -xf AMBARI-1.7.1-87-centos6.tar
+    cd  AMBARI-1.7.1
+    ./setup_repo.sh
   EOH
 end
 
@@ -52,16 +57,19 @@ bash 'install_PHD' do
 end
 
 hostsfile_entry '192.168.56.200' do
-  hostname  ['phdambari.local.com','phdambari']
+  hostname  'phdambari.local.com'
+  aliases   ['phdambari']
   action    :create_if_missing
 end
 
 hostsfile_entry '192.168.56.201' do
-  hostname  ['phds01.local.com','phds01']
+  hostname  'phds01.local.com'
+  aliases   ['phds01']
   action    :create_if_missing
 end
 
 hostsfile_entry '192.168.56.202' do
-  hostname  ['phds02.local.com','phds02']
+  hostname  'phds02.local.com'
+  aliases   ['phds02']
   action    :create_if_missing
 end
