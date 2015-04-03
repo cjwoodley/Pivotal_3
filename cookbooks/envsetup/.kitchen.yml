@@ -1,0 +1,21 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+#  - name: ubuntu-12.04
+#  - name: centos-6.4
+  - name: centos-6.5
+
+suites:
+  - name: PHD_S01
+    driver:
+      vm_hostname: phds01.local.com
+      network:
+      - ["private_network",{ip: "192.168.56.201"}]
+    run_list:
+      - recipe[envsetup::default]
+    attributes:

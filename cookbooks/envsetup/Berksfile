@@ -1,0 +1,5 @@
+source "http://supermarket.getchef.com"
+cookbook "yum"
+cookbook 'selinux', '~> 0.9.0'
+metadata
+

@@ -1,0 +1,4 @@
+source "http://supermarket.getchef.com"
+cookbook "yum"
+metadata
+
