@@ -25,19 +25,27 @@ end
 
 %w(
     httpd
+    ntp
   ).each do |p|
   yum_package p do 
     action :install
   end
 end
 
+service 'ntpd' do
+  action [:enable, :start]
+end
+
 service 'httpd' do
   action [:enable, :start]
 end
 
+yum_package 'openssl.x86_64' do 
+  action :upgrade
+end
 
 bash 'install_ambari' do
-  action :run
+  action :nothing
   user 'root'
   cwd '/opt/sources'
   code <<-EOH
@@ -53,8 +61,21 @@ bash 'install_PHD' do
   cwd '/opt/sources'
   code <<-EOH
     tar -xf PHD-3.0.0.0-249-centos6.tar
+    ./PHD-3.0.0.0/setup_repo.sh
   EOH
 end
+
+bash 'install_PHDUtils' do
+  action :nothing
+  user 'root'
+  cwd '/opt/sources'
+  code <<-EOH
+    tar -xf PHD-UTILS-1.1.0.20-centos6.tar
+    ./PHD-UTILS-1.1.0.20/setup_repo.sh
+  EOH
+end
+
+
 
 hostsfile_entry '192.168.56.200' do
   hostname  'phdambari.local.com'
@@ -72,4 +93,8 @@ hostsfile_entry '192.168.56.202' do
   hostname  'phds02.local.com'
   aliases   ['phds02']
   action    :create_if_missing
+end
+
+yum_package 'ambari-server' do
+  action :install
 end

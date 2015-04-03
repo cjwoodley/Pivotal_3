@@ -17,16 +17,35 @@ execute "Disable IPtables" do
 end
 
 hostsfile_entry '192.168.56.200' do
-  hostname  ['phdambari.local.com','phdambari']
+  hostname  'phdambari.local.com'
+  aliases   ['phdambari']
   action    :create_if_missing
 end
 
 hostsfile_entry '192.168.56.201' do
-  hostname  ['phds01.local.com','phds01']
+  hostname  'phds01.local.com'
+  aliases   ['phds01']
   action    :create_if_missing
 end
 
 hostsfile_entry '192.168.56.202' do
-  hostname  ['phds02.local.com','phds02']
+  hostname  'phds02.local.com'
+  aliases   ['phds02']
   action    :create_if_missing
+end
+
+yum_package 'openssl.x86_64' do 
+  action :upgrade
+end
+
+%w(
+    ntp
+  ).each do |p|
+  yum_package p do 
+    action :install
+  end
+end
+
+service 'ntpd' do
+  action [:enable, :start]
 end
