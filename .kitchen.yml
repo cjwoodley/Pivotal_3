@@ -11,7 +11,7 @@ platforms:
   - name: centos-6.5
     #driver:
     #  box: chef/centos-6.5
-suites:
+
 suites:
   - name: PHD_AMBARI
     driver:
@@ -19,16 +19,20 @@ suites:
       network:
       - ["private_network",{ip: "192.168.56.200"}]
     run_list:
-      - recipe[ambari::default]
+      - recipe[phd::default]
+      #- recipe[phd::ambari]
 
   - name: PHD_S01
     driver:
       vm_hostname: phds01.local.com
       network:
       - ["private_network",{ip: "192.168.56.201"}]
+      customize:
+        memory: 2048
+        cpus: 2
     run_list:
-      - recipe[envsetup::default]
-      - recipe[hds::default]
+      - recipe[phd::default]
+      - recipe[phd::nodes]
     attributes:
 
   - name: PHD_S02
@@ -36,7 +40,10 @@ suites:
       vm_hostname: phds02.local.com
       network:
       - ["private_network",{ip: "192.168.56.202"}]
+      customize:
+        memory: 2048
+        cpus: 2
     run_list:
-      - recipe[envsetup::default]    
-      - recipe[hds::default]
+      - recipe[phd::default]    
+      - recipe[phd::nodes]
     attributes:
