@@ -9,5 +9,5 @@ version          '0.1.0'
 depends 'selinux'
 depends 'hostsfile'
 depends 'yum'
-cookbook 'sysctl'
+#depends 'sysctl'
 

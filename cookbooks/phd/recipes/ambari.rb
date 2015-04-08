@@ -27,7 +27,7 @@ service 'httpd' do
 end
 
 bash 'install_ambari' do
-  action :nothing
+  action :run
   user 'root'
   cwd '/opt/sources'
   code <<-EOH
@@ -35,40 +35,44 @@ bash 'install_ambari' do
     cd  AMBARI-1.7.1
     ./setup_repo.sh
   EOH
+  only_if { ::File.exists?("/opt/sources/AMBARI-1.7.1-87-centos6.tar") }
 end
 
 bash 'install_PHD' do
-  action :nothing
+  action :run
   user 'root'
   cwd '/opt/sources'
   code <<-EOH
     tar -xf PHD-3.0.0.0-249-centos6.tar
     ./PHD-3.0.0.0/setup_repo.sh
   EOH
+  only_if { ::File.exists?("/opt/sources/PHD-3.0.0.0-249-centos6.tar") }
 end
 
 bash 'install_PHDUtils' do
-  action :nothing
+  action :run
   user 'root'
   cwd '/opt/sources'
   code <<-EOH
     tar -xf PHD-UTILS-1.1.0.20-centos6.tar
     ./PHD-UTILS-1.1.0.20/setup_repo.sh
   EOH
+  only_if { ::File.exists?("/opt/sources/PHD-UTILS-1.1.0.20-centos6.tar") }
 end
 
 bash 'install_hawq' do
-  action :nothing
+  action :run
   user 'root'
   cwd '/opt/sources'
   code <<-EOH
     tar -xf PHD-UTILS-1.1.0.20-centos6.tar
     ./PHD-UTILS-1.1.0.20/setup_repo.sh
   EOH
+  only_if { ::File.exists?("/opt/sources/PHD-UTILS-1.1.0.20-centos6.tar") }
 end
 
 yum_package 'ambari-server' do
-  action :nothing
+  action :install
 end
 
 
