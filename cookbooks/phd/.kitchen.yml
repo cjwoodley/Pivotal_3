@@ -1,0 +1,49 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+#  - name: ubuntu-12.04
+#  - name: centos-6.4
+  - name: centos-6.5
+    #driver:
+    #  box: chef/centos-6.5
+
+suites:
+  - name: PHD_AMBARI
+    driver:
+      vm_hostname: phdambari.local.com
+      network:
+      - ["private_network",{ip: "192.168.56.200"}]
+    run_list:
+      - recipe[phd::default]
+      - recipe[phd::ambari]
+
+  - name: PHD_S01
+    driver:
+      vm_hostname: phds01.local.com
+      network:
+      - ["private_network",{ip: "192.168.56.201"}]
+      customize:
+        memory: 2048
+        cpus: 2
+    run_list:
+      - recipe[phd::default]
+      - recipe[phd::nodes]
+    attributes:
+
+  - name: PHD_S02
+    driver:
+      vm_hostname: phds02.local.com
+      network:
+      - ["private_network",{ip: "192.168.56.202"}]
+      customize:
+        memory: 2048
+        cpus: 2
+    run_list:
+      - recipe[phd::default]    
+      - recipe[phd::nodes]
+    attributes:
