@@ -32,6 +32,12 @@ hostsfile_entry '192.168.56.202' do
   action    :create_if_missing
 end
 
+hostsfile_entry '192.168.56.203' do
+  hostname  'phds03.local.com'
+  aliases   ['phds03']
+  action    :create_if_missing
+end
+
 %w(
     ntp
   ).each do |p|
