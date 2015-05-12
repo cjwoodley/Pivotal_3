@@ -71,10 +71,6 @@ bash 'install_hawq' do
   only_if { ::File.exists?("/opt/sources/PHD-UTILS-1.1.0.20-centos6.tar") }
 end
 
-yum_package 'ambari-server' do
-  action :install
-end
-
 bash 'copy_java' do 
 	action :run
 	user 'root'
@@ -86,3 +82,6 @@ bash 'copy_java' do
   not_if { ::File.exists?("/opt/sources/UnlimitedJCEPolicyJDK7.zip") }
 end
 
+yum_package 'ambari-server' do
+  action :install
+end
