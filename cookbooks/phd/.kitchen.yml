@@ -9,8 +9,8 @@ platforms:
 #  - name: ubuntu-12.04
 #  - name: centos-6.4
   - name: centos-6.5
-    #driver:
-    #  box: chef/centos-6.5
+    driver:
+      box: chef/centos-6.5
 
 suites:
   - name: PHD_AMBARI
@@ -40,6 +40,19 @@ suites:
       vm_hostname: phds02.local.com
       network:
       - ["private_network",{ip: "192.168.56.202"}]
+      customize:
+        memory: 2048
+        cpus: 2
+    run_list:
+      - recipe[phd::default]    
+      - recipe[phd::nodes]
+    attributes:
+
+  - name: PHD_S03
+    driver:
+      vm_hostname: phds03.local.com
+      network:
+      - ["private_network",{ip: "192.168.56.203"}]
       customize:
         memory: 2048
         cpus: 2
