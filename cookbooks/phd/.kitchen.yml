@@ -12,7 +12,6 @@ platforms:
     driver:
       box: chef/centos-6.5
 
-
 suites:
   - name: PHD_AMBARI
     driver:
