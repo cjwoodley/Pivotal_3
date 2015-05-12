@@ -71,9 +71,17 @@ bash 'install_hawq' do
   only_if { ::File.exists?("/opt/sources/PHD-UTILS-1.1.0.20-centos6.tar") }
 end
 
+bash 'copy_java' do 
+	action :run
+	user 'root'
+    cwd '/opt/sources'
+     code <<-EOH
+     cp jdk-7u67-linux-x64.gz /var/lib/ambari-server/resources/jdk-7u67-linux-x64.tar.gz
+     cp UnlimitedJCEPolicyJDK7.zip /var/lib/ambari-server/resources/
+     EOH
+  not_if { ::File.exists?("/opt/sources/UnlimitedJCEPolicyJDK7.zip") }
+end
+
 yum_package 'ambari-server' do
   action :install
 end
-
-
-
