@@ -11,6 +11,7 @@ platforms:
   - name: centos-6.5
     #driver:
     #  box: chef/centos-6.5
+    #adding a new line in eclipse
 
 suites:
   - name: PHD_AMBARI
