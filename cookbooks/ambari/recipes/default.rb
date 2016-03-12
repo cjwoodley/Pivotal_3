@@ -49,8 +49,8 @@ bash 'install_ambari' do
   user 'root'
   cwd '/opt/sources'
   code <<-EOH
-    tar -xf AMBARI-1.7.1-87-centos6.tar
-    cd  AMBARI-1.7.1
+    tar -xf AMBARI-2.1.2.2-163-centos6.tar.gz
+    cd  AMBARI*
     ./setup_repo.sh
   EOH
 end

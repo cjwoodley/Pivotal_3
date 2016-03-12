@@ -31,11 +31,11 @@ bash 'install_ambari' do
   user 'root'
   cwd '/opt/sources'
   code <<-EOH
-    tar -xf AMBARI-1.7.1-87-centos6.tar
-    cd  AMBARI-1.7.1
+    tar -xf AMBARI-2.1.2.2-163-centos6.tar.gz
+    cd  AMBARI*
     ./setup_repo.sh
   EOH
-  only_if { ::File.exists?("/opt/sources/AMBARI-1.7.1-87-centos6.tar") }
+  only_if { ::File.exists?("/opt/sources/AMBARI-2.1.2.2-163-centos6.tar.gz") }
 end
 
 bash 'install_PHD' do
@@ -60,23 +60,23 @@ bash 'install_PHDUtils' do
   only_if { ::File.exists?("/opt/sources/PHD-UTILS-1.1.0.20-centos6.tar") }
 end
 
-bash 'install_hawq' do
-  action :run
-  user 'root'
-  cwd '/opt/sources'
-  code <<-EOH
-    tar -xf PHD-UTILS-1.1.0.20-centos6.tar
-    ./PHD-UTILS-1.1.0.20/setup_repo.sh
-  EOH
-  only_if { ::File.exists?("/opt/sources/PHD-UTILS-1.1.0.20-centos6.tar") }
-end
+#bash 'install_hawq' do
+#  action :run
+#  user 'root'
+#  cwd '/opt/sources'
+#  code <<-EOH
+#    tar -xf PHD-UTILS-1.1.0.20-centos6.tar
+#    ./PHD-UTILS-1.1.0.20/setup_repo.sh
+#  EOH
+#  only_if { ::File.exists?("/opt/sources/PHD-UTILS-1.1.0.20-centos6.tar") }
+#end
 
 bash 'copy_java' do 
 	action :run
 	user 'root'
     cwd '/opt/sources'
      code <<-EOH
-     cp jdk-7u67-linux-x64.gz /var/lib/ambari-server/resources/jdk-7u67-linux-x64.tar.gz
+     cp jdk-7u79-linux-x64.tar.gz /var/lib/ambari-server/resources/jdk-7u79-linux-x64.tar.gz
      cp UnlimitedJCEPolicyJDK7.zip /var/lib/ambari-server/resources/
      EOH
   not_if { ::File.exists?("/opt/sources/UnlimitedJCEPolicyJDK7.zip") }
